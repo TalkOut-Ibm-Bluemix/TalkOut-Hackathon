@@ -1,0 +1,44 @@
+Talkout App :
+
+The Chat system works on the basis of multi-thread concept using the socket concept in flask.
+We have tried to connect many multi threading concepts where many threads are inter-linked with each other and connect many users in different channel.
+
+The main concept of the project is assigning sessions and managing multi sessions in an optimized way.
+This multi threading chat is basically a different type of evolution in the field of event management and organizing discussion groups all over the internet.
+
+We have tried our best to make the application as fast as possible. Therefore there is no formalities of login, signup and any kind of verification.
+
+Along with the chatting group we have also tried to optimize the context of the chats and active threads in the active session channel.
+
+Using the great optimal strategy of the (mapper reducer function) we have tried to condense the trending #tags and put
+them into the chat environment.
+
+Everything is live and everytime a mapper reducer function runs to give the trend result.
+
+The chat application supports many threads and beautifully keep tracks of the previous stack and discussion.
+
+We are trying to optimise the code, such that we can give the trend analysis to every user.
+
+We are also trying to implement a fast searching technology that to search for similar users and groups and trends.
+
+Further development includes, to take the application to the next level and deploy it to the servers of neo4j, and elasticsearch.
+
+We would love to extend the project that enables a streaming data analysis and relative scoring.
+
+
+
+Failures That a client may face:
+
+Since the application server needs to check for every session and manage a multiple threads on multiple levels ,therefore scalability
+may be an issue.
+Secondly, the application lacks primary caching and we would love to implement the caching techniques.
+
+
+Hope this application find it's way to further optimization and developments.
+Thanks  for providing such a wonderful platform.
+Thanks,
+IBM Bluemix and HackerEarth
+
+Regards,
+Team PerfectHacker
+
