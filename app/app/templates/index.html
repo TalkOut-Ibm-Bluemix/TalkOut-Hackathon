@@ -1,0 +1,223 @@
+<html>
+    <head>
+         <meta charset="utf-8">
+             <meta name="viewport" content="width=device-width, initial-scale=1">
+                <title>Bluemix Hackathon App</title>
+    <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="static/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+        <link rel="stylesheet" href="static/css/bootstrap-theme.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+        <script src="static/js/bootstrap.min.js"></script>
+        <script src="static/js/jquery-2.1.3.min.js"></script>
+        <style>
+        .myName{
+            letter-spacing: 1px;float: right;opacity: 1;color:black;height: 40px; border-radius: 10px; border: 1px solid #33cccc;margin-bottom: 15px;margin-top: 5px;margin-right: 20px;
+        }
+        .myChannel{
+            letter-spacing: 1px;color:black;float: right;height: 40px;opacity: 1; border-radius: 10px; border: 1px solid #33cccc;margin-bottom: 15px;margin-top: 5px;margin-right: 20px;
+        }
+            .cover-page {
+                animation-name: bgcolour;
+                animation-duration: 5s;
+                animation-iteration-count: infinite;
+                animation-direction: alternate;
+                -webkit-animation-name: bgcolour;
+                -webkit-animation-duration: 8s;
+                -webkit-animation-iteration-count: infinite;
+                -webkit-animation-direction: alternate;
+            }
+            @keyframes bgcolour {
+                0% {background-color: #000066}
+                25% {background-color: #cc33ff}
+                50% {background-color: #ff9933}
+                75% {background-color: #0099ff}
+            }
+            @-webkit-keyframes bgcolour {
+                 0% {background-color: #000066}
+                25% {background-color: #cc33ff}
+                50% {background-color: #ff9933}
+                75% {background-color: #0099ff}    
+            }
+            .slideshow {
+                position: absolute;
+                width: 100%;
+                z-index: -199;
+            }
+            .slideshow figure {
+                margin: 0;
+            }
+            #vid {
+                z-index: -399;
+                width: 1550px;
+                height: 750px;
+                margin-top: 60px;
+                position: fixed;
+                margin-left: -15%;
+            }
+            .channel-form {
+                width: 100%;
+                background-color: #ccffcc;
+                position: inherit;
+                height: auto;
+            }
+            .form-ctrl:hover {
+                opacity: 0.9;
+            }
+            .myButton{
+                border-radius: 8px; background-color: #3366ff; opacity: 2;;margin-top: 30px;width: 100%;height: 40px; letter-spacing: 1px; font-size: 20px;color:white;
+            }
+            .formClass
+            {
+                margin: 20px; font-size: 18px;color: white;
+                margin-top: 5px;
+            }
+        /*             
+            .outer_face {
+                position: relative;
+                width: 250px;
+                height: 250px;
+                border-radius: 250px;
+                background: white;
+                box-shadow: inset 0 0 10px gray;
+                border: 14px solid black
+            }
+
+            .outer_face::before, .outer_face::after{ /* 12-6 and 9-3 hour markers 
+                content: "";
+                position: absolute;
+                width: 10px;
+                height: 100%;
+                background: black;
+                z-index: 0;
+                left: 50%;
+                margin-left: -5px;
+                top: 0
+            }
+.outer_face::after { /* 9-3 time marker specifically
+-moz-transform: rotate(90deg);
+-ms-transform: rotate(90deg);
+-webkit-transform: rotate(90deg);
+transform: rotate(90deg)
+}
+            */
+            
+            
+            
+        </style>
+    </head>
+    <body>
+        <div style="width: 100%">
+            <div class="container cover-page" style="z-index: -9;cursor: pointer;opacity: 0.8;background-color: #000066; width: 100%; height: 100%; max-height: 700px">
+                <div class="row" style="margin-top: 20%">
+                <div class="col-md-4"></div>
+                <div class="col-md-4" style="margin-left: 50px; opacity: 1">
+                <h2 style="font-weight: 500;margin-left: 40px; color: #fff; font-size: 24px">Welcome to</h2>
+                <h1 style="color: #fff; font-weight: 800; margin-left: 20px; font-size: 48px">Talkout</h1>
+                </div>
+                <div class="col-md-4"></div>
+                </div>
+            </div>    
+        </div>
+        
+         <div class="container navb" id="header" style="width: 100%;z-index: -99;position: fixed; background-color: #660066; height: 10%; top:0">
+            <div class="col-md-3">
+		<div class="logo" style="width: 90%;margin-left: 10px; opacity: 0.8">
+        	    <a href="index.html">
+			<h2 style="color: #fff; font-weight: 300">Workspace</h2>
+        	    </a>
+    		</div>
+	    </div>
+            <div class="col-md-9">
+                <div class="outer_face">
+                    
+                </div>
+            </div>
+        </div>
+       
+       <div class="container"> 
+        <video id="vid" width="200" autoplay loop muted>
+        <source src="static/images/website_bg.mp4" type="video/mp4"></source>
+        </video>
+        </div>
+       
+       <div class="container">
+        <div class="row" style="margin-top:23%;">
+            <div class="col-md-4"></div>
+            <div class="col-md-4 form-ctrl" style="margin-left: 27%;width: 450px;border-radius: 30px; background-color: #0f3d3d;opacity: 0.7; height: 300px; position: fixed">
+                <h1 style="letter-spacing: 1px; color: white; font-family: helvetica;text-align: center;font-weight: 600">Enter WorkSpace</h1>
+                <form  method="post" style="">
+                    
+            {{ form.hidden_tag() }}
+            {{ form.name.label(class_="formClass") }}: {{ form.name(class_="myName",placeholder="Enter Name",value="") }} {% for error in form.name.errors %}{{ error }}{% endfor %}<br>
+            <br style="clear: both">
+            {{ form.room.label(class_="formClass") }}: {{ form.room(class_="myChannel",placeholder="Enter Channel",value="") }} {% for error in form.room.errors %}{{ error }}{% endfor %}<br>
+            {{ form.submit(class_="myButton") }}
+                    <!--<div style="margin: 20px; font-size: 18px;color: white">
+                        Channel Name  <input type="text" name="channel_name" placeholder="   Enter Channel Name" style="letter-spacing: 1px;color:black;float: right;height: 40px;opacity: 1; border: 1px solid #33cccc;margin-bottom: 15px;margin-top: -5px">
+                        <br style="clear: both">
+                        Name  <input type="text" name="name" placeholder="   Enter your name" style="letter-spacing: 1px;float: right;opacity: 1;color:black;height: 40px; border: 1px solid #33cccc;margin-bottom: 15px;margin-top: -5px">
+                        <br style="clear: both">
+                        Email  <input type="text" name="email" placeholder="   Enter your name" style="letter-spacing: 1px;float: right;opacity: 1;color:black;  height: 40px; border: 1px solid #33cccc;margin-bottom: 15px;margin-top: -5px">
+                        <br style="clear: both">
+                        <button type="button" value="submit" style="border-radius: 8px; background-color: #3366ff; opacity: 2;;margin-top: 10px;width: 100%;height: 40px; letter-spacing: 1px; font-size: 20px">Enter</button>
+                    </div>-->
+                </form>
+            </div>
+        </div>
+        </idv>
+    <!--
+        <div class="container" style="height: 640px; background-color: ##33ad33; position: relative">
+            
+        </div>
+        
+        <div class="container channel-form" id="form">
+            <div class="row cont-2">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <form>
+                        <div>
+                            Channel Name :<input type="text" name="channel_name" placeholder="Enter Channel name">
+                            Name : <input type="text" name="name" placeholder="Enter your name">
+                            <button type="button" value="submit">Submit</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+        </div>        
+                
+ -->       
+        <div class="footer" style="height: 6%;margin-top:90%; margin-bottom: 0px;z-index: -9999">
+            <div class="row">
+            <div class="col-md-4" style="color: white; font-size: 16px; font-weight: 300">
+            &copy;
+            </div>
+            </div>
+        </div>
+        <!--
+        <h1>Hacker Room-Chat</h1>
+        
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            {{ form.name.label }}: {{ form.name() }} {% for error in form.name.errors %}{{ error }}{% endfor %}<br>
+            {{ form.room.label }}: {{ form.room() }} {% for error in form.room.errors %}{{ error }}{% endfor %}<br>
+            {{ form.submit() }}
+        </form>
+        -->
+        <script>
+            $(window).scroll(function(){
+                if ($(this).scrollTop()>0) {
+                    //code
+                    $('.cover-page').fadeOut();
+                    $('.navb').fadeIn();
+                }
+                /*else{
+                    $('.cover-page').fadeIn();
+                }*/
+                });
+        </script>
+    </body>
+</html>

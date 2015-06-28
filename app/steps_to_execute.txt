@@ -1,0 +1,17 @@
+Steps to Play with Talkout App :
+
+1) Go to Presentation folder and double click the IBM_Presentation.html file.
+2) The file will be open in your default browser.
+3) Read the Presentation in HTML with fluid flow. We have the kept the presentation short and simple by focusing only on focuses on product features.
+4) On the welcome page, scroll down to go to workspace page.
+5) Chrome User : On the workspace page, if you want to start your own group, enter your name, new Channel_name and press Enter button.
+6) Multiple User can login to your channel and can connect with you.
+7) This will take you to your workspace. There you can chat with your friends, colleague and members active in the same Channel.
+8) This app provide the functionality of sending Hyperlinks.
+9) You will be able to see the real time clock on the dashboard.
+10) You can create your own trend by writting with #__trendname__. You can the see the latest trend going on in the discussion without reading previous comments.
+11) This app require no login or signup. just enter the details and there you go.
+12) Keep Talking
+
+Thanks and Regards,
+Team PerfectHackers

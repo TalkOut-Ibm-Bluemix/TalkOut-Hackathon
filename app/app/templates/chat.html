@@ -1,0 +1,176 @@
+<html>
+    <head>
+        <!--<title>Simple APP: {{ room }}</title>-->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Bluemix Hackathon App</title>
+    <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="static/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+        <link rel="stylesheet" href="static/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="static/css/clock.css">
+    <!-- Latest compiled and minified JavaScript -->
+        <script src="static/js/bootstrap.min.js"></script>
+          <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+           <script src="static/js/jquery-2.1.3.min.js"></script>
+    <script type="text/javascript" src="http://mbostock.github.com/d3/d3.geom.js?2.1.3"></script>
+    <script type="text/javascript" src="http://mbostock.github.com/d3/d3.layout.js?2.1.3"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.16/socket.io.min.js"></script>
+        <div id="my"></div>
+        <script type="text/javascript" charset="utf-8">
+            var data = [{'value': 1, 'label': '#xyz'}, {'value': 1, 'label': '#xy1'}, {'value': 1, 'label': '#xyz12'}]
+
+     
+        function abc(data)
+        {
+            var w = 300,                        
+        
+    h = 300,                            
+    r = 100,                            
+    color = d3.scale.category20c();    
+        var vis = d3.select("#my")
+        .append("svg:svg")              
+        .data([data])                   
+            .attr("width", w)           
+            .attr("height", h)
+        .append("svg:g")               
+            .attr("transform", "translate(" + r + "," + r + ")")    
+     var arc = d3.svg.arc()  
+            .outerRadius(r);
+     var pie = d3.layout.pie()          
+        .value(function(d) { return d.value; });    
+     var arcs = vis.selectAll("g.slice")     
+        .data(pie)                           
+        .enter()                            
+            .append("svg:g")                
+                .attr("class", "slice");    
+        arcs.append("svg:path")
+                .attr("fill", function(d, i) { return color(i); } ) 
+                .attr("d", arc);                                    
+         arcs.append("svg:text")                                     
+                .attr("transform", function(d) {                    
+                d.innerRadius = 50;
+                d.outerRadius = 100;
+                return "translate(" + arc.centroid(d) + ")";        
+            })
+            .attr("text-anchor", "middle")                          
+            .text(function(d, i) { return data[i].label; });
+        }
+       // abc(data);
+            var socket;
+            var clients=[];
+            $(document).ready(function(){
+                socket = io.connect('http://' + document.domain + ':' + location.port + '/chat');
+                socket.on('connect', function() {
+                    socket.emit('joined', {});
+                    clients.push(socket.id);
+                    socket.emit('notify',{});
+                });
+                socket.on('notify', function(data) {
+            //alert("hello");
+                    $('#notify').append(data.msg + '\n');
+                    $('#notify').scrollTop($('#notify')[0].scrollHeight);
+                   // socket.connected[clients[1]].emit("individual","Hello");
+                });
+                socket.on('status', function(data) {
+                    $('#entered').html( '<b style="color:red;"> ' + data.msg + '</b>');
+                    $('#entered').scrollTop($('#entered')[0].scrollHeight);
+                });
+                socket.on('message', function(data) {
+                    $('#chat').append(data.msg + '</br>');
+                    $('#chat').scrollTop($('#chat')[0].scrollHeight);
+                });
+                socket.on('draw',function(data)
+                {
+                    d=JSON.parse(data.msg)
+                    console.log(d);
+                    abc(d);
+                });
+                $('#text').keypress(function(e) {
+                    var code = e.keyCode || e.which;
+                    if (code == 13) {
+                        text = $('#text').val();
+                        $('#text').val('');
+                        socket.emit('text', {msg: text});
+                    }
+                });
+            });
+               
+        </script>
+        <style>
+            
+        </style>
+    </head>
+    <body>
+                <div class="container" style="height: 60px; background-color: #660066; width: 100%;>
+            <div class="row"">
+                <div class="col-md-4"><h2 style="color: white;margin-bottom: 5px;vertical-align: middle">{{ room }}<span> Channel</span></h3></div>
+                <div class="col-md-8"></div>
+            </div>
+        </div>
+        
+        <div class="container">  <!-- Container 1 -->
+            <div class="col-md-3">
+                <div id="n" style="height: 30%">
+                <div style="font-size:18px;width: 70%;color: white; background-color: #ff6600; text-align: center; margin-top:40px;height: 30px;padding-top:4px">Trending Now:</div>
+                <div id="notify" style="overflow: auto;height: 100%;width: 70%"></div>
+                </div>
+            </div>
+            <div class="col-md-6" style="margin-left: -40px; margin-top: 20px;border-radius: 15px">
+                <div id="entered"></div>
+            <div id="chat" style="letter-spacing: 1px;height:60%;width:100%; overflow: auto;"></div></div>
+            <div class="col-md-3">              <!--  ________________________clock Event_____________________ -->
+                <div class="outer_face">
+                    <div class="marker oneseven"></div>
+                    <div class="marker twoeight"></div>
+                    <div class="marker fourten"></div>
+                    <div class="marker fiveeleven"></div>
+<!-- _______________Inner Face_______________ -->                    
+                    <div class="inner_face">
+                        <div class="hand hour"></div>
+                        <div class="hand minute"></div>
+                        <div class="hand second"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container" style="margin-top: 20px">
+            <div class="col-md-3"><button class="btn btn-danger"><a href="{{ url_for('main.index') }}" onclick="socket.emit('left', {});" style="width: 90%; height: 30px; font-size: 18px; text-decoration: none;color: white">Leave this Channel</a></button></div>
+            <div class="col-md-6" style="margin-left: -40px">
+            <input id="text" placeholder="   Enter your message here" style="letter-spacing: 1px;width: 100%;margin-left: 0%; font-size: 16px;height: 50px; border: 3px solid #660066; border-radius: 10px">
+            </div>
+            <div class="col-md-3"></div>
+        </div>
+        
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+    <script type="text/javascript">
+
+    var $hands = $('    div.hand')
+
+    window.requestAnimationFrame = window.requestAnimationFrame
+                               || window.mozRequestAnimationFrame
+                               || window.webkitRequestAnimationFrame
+                               || window.msRequestAnimationFrame
+                               || function(f){return setTimeout(f, 1000/60)}
+
+
+    function updateclock(){
+     var curdate = new Date()
+     var hour_as_degree = ( curdate.getHours() + curdate.getMinutes()/60 ) / 12 * 360
+     var minute_as_degree = curdate.getMinutes() / 60 * 360
+     var second_as_degree = ( curdate.getSeconds() + curdate.getMilliseconds()/1000 ) /60 * 360
+     $hands.filter('.hour').css({transform: 'rotate(' + hour_as_degree + 'deg)' })
+     $hands.filter('.minute').css({transform: 'rotate(' + minute_as_degree + 'deg)' })
+     $hands.filter('.second').css({transform: 'rotate(' + second_as_degree + 'deg)' })
+     requestAnimationFrame(updateclock) // 
+    }
+
+    requestAnimationFrame(updateclock)
+
+
+</script>
+    </body>
+</html>
